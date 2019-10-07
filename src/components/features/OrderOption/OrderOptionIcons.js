@@ -5,19 +5,26 @@ import {formatPrice} from '../../../utils/formatPrice';
 import styles from './OrderOption.scss';
 
 const OrderOptionIcons = ({values, setOptionValue, required, currentValue}) => (
-  <div className={styles.icon}>
-    {required ? '' : (
-      <div className={styles.icon} setOptionValue=''><Icon name={'times-circle'}>none</Icon></div>
-    )}
+  <section className={styles.icon} value={currentValue}>
+    {required ? '' :
+      <div
+        className={`styles.icon ${currentValue == '' ? styles.iconActive : ''}`}
+        key='null'
+        value=''
+        onClick={() => setOptionValue('')}
+      >
+        <Icon name={'times-circle'}>none</Icon></div>}
     {values.map(value => (
       <div
         key={value.id}
+        value={value.id}
         className={`styles.icon ${currentValue == value.id ? styles.iconActive : ''}`}
-        onClick={() => setOptionValue(value.id)}>
+        onClick={() => setOptionValue(value.id)}
+      >
         <Icon name={value.icon}>{value.name} ({formatPrice(value.price)})</Icon>
       </div>
     ))}
-  </div>
+  </section>
 );
 
 OrderOptionIcons.propTypes = {

@@ -766,6 +766,36 @@
       "tripId": "5cc1d10181a30e85c8d9ad4a",
       "tripCountry": "Togo",
       "id": 51
+    },
+    {
+      "car-rental": "",
+      "accommodation": "hotel",
+      "features": [],
+      "adults": 1,
+      "children": 0,
+      "name": "a",
+      "contact": "a",
+      "start-date": "",
+      "totalCost": "$29,319",
+      "tripName": "Pleasant trek in outstanding Togo",
+      "tripId": "5cc1d10181a30e85c8d9ad4a",
+      "tripCountry": "Togo",
+      "id": 52
+    },
+    {
+      "car-rental": "",
+      "accommodation": "hotel",
+      "features": [],
+      "adults": 1,
+      "children": 0,
+      "name": "a",
+      "contact": "a",
+      "start-date": "",
+      "totalCost": "$29,319",
+      "tripName": "Pleasant trek in outstanding Togo",
+      "tripId": "5cc1d10181a30e85c8d9ad4a",
+      "tripCountry": "Togo",
+      "id": 53
     }
   ]
 }

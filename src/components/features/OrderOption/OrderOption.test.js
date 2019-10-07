@@ -15,13 +15,12 @@ describe('Component OrderOption', () => {
     expect(component).toEqual({});
   });
 
-  // it('should render correct name', () => {
-  //   const expectedName = 'Lorem ipsum';
-  //   const component = shallow(<OrderOption name={expectedName}/>);
-  //
-  //   expect(component.find('.title').text()).toEqual(expectedName);
-  //   console.log(component.debug());
-  // });
+  it('should render correct name', () => {
+    const expectedName = 'Lorem ipsum';
+    const component = shallow(<OrderOption name={expectedName}/>);
+
+    expect(component.find('.title').text()).toEqual(expectedName);
+  });
 });
 
 const optionTypes = {

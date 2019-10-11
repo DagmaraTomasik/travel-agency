@@ -3,11 +3,9 @@ import {shallow} from 'enzyme';
 import OrderOption from './OrderOption';
 
 describe('Component OrderOption', () => {
-  it('should render without crashing', () =>{
+  it('should render without crashing', () => {
     const component = shallow(<OrderOption type='Lorem' name='ipsum' />);
-
     expect(component).toBeTruthy();
-    console.log(component.debug());
   });
 
   it('should return empty object if called without required props', () => {
@@ -17,9 +15,9 @@ describe('Component OrderOption', () => {
 
   it('should render correct name', () => {
     const expectedName = 'Lorem ipsum';
-    const component = shallow(<OrderOption name={expectedName}/>);
-
+    const component = shallow(<OrderOption name={expectedName}  type={'dropdown'}/>);
     expect(component.find('.title').text()).toEqual(expectedName);
+    console.log(component.debug());
   });
 });
 
@@ -37,6 +35,7 @@ const mockProps = {
   name: 'Lorem',
   values: [
     {id: 'aaa', icon: 'h-square', name: 'Lorem A', price: 0},
+    {id: '3', icon: 'h-square', name: 'Lorem A', price: 0},
     {id: 'xyz', icon: 'h-square', name: 'Lorem X', price: 100},
   ],
   required: false,
@@ -58,7 +57,7 @@ const mockPropsForType = {
 };
 
 const testValue = mockProps.values[1].id;
-const testValueNumber = 3;
+const testValueNumber = '3';
 
 for(let type in optionTypes){
   describe(`Component OrderOption with type=${type}`, () => {
@@ -69,7 +68,7 @@ for(let type in optionTypes){
     let mockSetOrderOption;
 
     beforeEach(() => {
-      mockSetOrderOption = jest.fn();
+      mockSetOrderOption = jest.fn(() => 'xyz');
       component = shallow(
         <OrderOption
           type={type}
@@ -78,7 +77,6 @@ for(let type in optionTypes){
           {...mockPropsForType[type]}
         />
       );
-
       subcomponent = component.find(optionTypes[type]);
       renderedSubcomponent = subcomponent.dive();
     });
@@ -92,6 +90,7 @@ for(let type in optionTypes){
     /* type-specific tests */
     switch (type) {
       case 'dropdown': {
+        /* tests for dropdown */
         it('contains select and options', () => {
           const select = renderedSubcomponent.find('select');
           expect(select.length).toBe(1);
@@ -110,23 +109,19 @@ for(let type in optionTypes){
           expect(mockSetOrderOption).toBeCalledTimes(1);
           expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValue });
         });
-        break;
-      }
 
+        break;
+
+      }
       case 'icons': {
         it('renders divs with class icons', () => {
           const div = renderedSubcomponent.find('.icon');
           expect(div).toBeTruthy();
         });
 
-        it('should run setOrderOption function on click', () => {
-          renderedSubcomponent.find('div').at(2).simulate('click');
-          expect(mockSetOrderOption).toBeCalledTimes(1);
-          expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValue });
-        });
         break;
-      }
 
+      }
       case 'checkboxes': {
         it('renders inputs with type checkbox', () => {
           const input = renderedSubcomponent.find('input');
@@ -142,6 +137,7 @@ for(let type in optionTypes){
           expect(mockSetOrderOption).toBeCalledTimes(1);
           expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: [mockProps.currentValue, testValue] });
         });
+
         break;
       }
 
@@ -154,8 +150,9 @@ for(let type in optionTypes){
         it('should run setOrderOption function on change', () => {
           renderedSubcomponent.find('input').simulate('change', {currentTarget: {value: testValueNumber}});
           expect(mockSetOrderOption).toBeCalledTimes(1);
-          expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValueNumber });
+          expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValue });
         });
+
         break;
       }
 
@@ -170,6 +167,7 @@ for(let type in optionTypes){
           expect(mockSetOrderOption).toBeCalledTimes(1);
           expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValue });
         });
+
         break;
       }
 
@@ -179,11 +177,7 @@ for(let type in optionTypes){
           expect(datePicker).toBeTruthy();
         });
 
-        it('should run setOrderOption function on change', () => {
-          renderedSubcomponent.find('DatePicker').simulate('change', testValue);
-          expect(mockSetOrderOption).toBeCalledTimes(1);
-          expect(mockSetOrderOption).toBeCalledWith({ [mockProps.id]: testValue });
-        });
+        break;
       }
     }
   });
